@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: loyalty-points-engine
+  profiles:
+    active: h2
+
+  # In-memory H2 configuration (default)
+  datasource:
+    url: jdbc:h2:mem:loyaltydb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+# Loyalty Engine Configuration
+loyalty:
+  points-per-rupee: 0.1   # 1 point earned per Rs. 10 spent
+  rupees-per-point: 1.0   # 1 point = Rs. 1 discount
+
+# Swagger / OpenAPI documentation
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+---
+# MySQL Profile Configuration (uncomment and switch active profile to 'mysql' to use MySQL)
+# spring:
+#   config:
+#     activate:
+#       on-profile: mysql
+#   datasource:
+#     url: jdbc:mysql://localhost:3306/loyalty_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+#     username: root
+#     password: password
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#   jpa:
+#     database-platform: org.hibernate.dialect.MySQLDialect
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: false
